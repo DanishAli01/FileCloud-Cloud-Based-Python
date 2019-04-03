@@ -1,4 +1,4 @@
-from google.appengine.ext import ndb
+from . import ndb
 
 
 class User(ndb.Model):
