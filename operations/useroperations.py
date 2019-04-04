@@ -1,3 +1,5 @@
+import re
+
 from . import users as ndbusers
 from . import User as modeluser
 from . import ndb
@@ -42,3 +44,29 @@ def add_user(user):
     dirop.set_root_directory(user)
     localuser.current_dir = ndb.Key(modelfolder, localuser.key.id() + dirop.slash)
     localuser.put()
+
+
+# extracts all the names from a list of directory/ file keys
+def get_names_from_list(elements):
+    names = list()
+
+    for element in elements:
+        names.append(element.get().name)
+
+    return names
+
+
+def prepare_directory_name(directory_name):
+    return re.sub(r"[/;]", '', ' ', directory_name).lstrip()
+
+
+def sort_list(list):
+    return sorted(list, key=lambda item: item.get().name.lower())
+
+
+def get_login_url(main_page):
+    return ndbusers.create_login_url(main_page.request.uri)
+
+
+def get_logout_url(main_page):
+    return ndbusers.create_logout_url(main_page.request.uri)
