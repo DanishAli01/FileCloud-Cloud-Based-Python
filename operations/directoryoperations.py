@@ -4,6 +4,7 @@ from . import Folder as modelfolder
 from . import ndb
 import useroperations as userop
 
+
 slash = "/"
 rootname = "root"
 
@@ -49,3 +50,27 @@ def get_path(n, parent_dir_object):
 
 def dir_is_empty_check(dir):
     return not dir.files and not dir.drs
+
+
+# checks if a key is in a list of keys, if so returns true
+def contains(key, list):
+    return key not in list
+
+def add_dir(name,parent):
+    user = userop.get_model_user()
+    parent_object = parent.get()
+    p = get_path(name,parent_object)
+    id = user.get.key.id() + p
+    dir = modelfolder(id=id)
+    dir_key = dir.key
+
+    if contains(dir_key,parent_object.drs):
+        parent_object.drs.append(dir_key)
+        parent_object.put()
+
+        # Set all attributes of the directory and save it to datastore
+        dir.root_dir = parent
+        dir.name = name
+        dir.path = p
+        dir.put()
+
