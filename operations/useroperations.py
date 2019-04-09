@@ -3,7 +3,7 @@ import re
 from . import users as ndbusers
 from . import User as modeluser
 from . import ndb
-import directoryoperations as dirop
+import directoryoperations as fromdirectoryoperations
 from . import Folder as modelfolder
 
 
@@ -23,7 +23,7 @@ def get_model_user():
 
 
 # log in check
-def is_user_logged_in():
+def login_check():
     if get_current_user():
         return True
     else:
@@ -40,10 +40,12 @@ def user_present_in_model():
 
 
 def add_user(user):
-    localuser = modeluser(id=user.userid())
-    dirop.set_root_directory(user)
-    localuser.current_dir = ndb.Key(modelfolder, localuser.key.id() + dirop.slash)
-    localuser.put()
+    my_user = modeluser(id=user.user_id())
+    fromdirectoryoperations.set_root_directory(my_user)
+
+    # set current path on first login to root directory
+    my_user.current_dir = ndb.Key(modelfolder, my_user.key.id() + '/')
+    my_user.put()
 
 
 # extracts all the names from a list of directory/ file keys

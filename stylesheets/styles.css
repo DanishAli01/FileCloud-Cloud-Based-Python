@@ -1,0 +1,374 @@
+* {
+    box-sizing: border-box ;
+}
+
+body {
+
+    font-family: 'Questrial', Helvetica Neue, SansSerif, serif;
+}
+
+/*********** LINKS ***********/
+a {
+    text-decoration: None;
+    color: #34393f;
+}
+
+a:visited {
+    text-decoration: none;
+    color: #34393f;
+}
+
+/*********** ELEMENTS ***********/
+.header_login {
+    background-color: #34393f;
+    text-align: center;
+    font-size: 50px;
+    color: #f4fcff;
+    margin: auto;
+    width: 30%;
+    overflow: hidden;
+    border: 0.5px solid #434647;
+    padding: 15px;
+    box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    top: 0px;
+}
+
+.content_login {
+    font-size: 20px;
+    background-color: #efefef;
+    margin: auto;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    width: 30%;
+    padding: 10px;
+    min-height: 27%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.header {
+    background-color: #34393f;
+    text-align: center;
+    font-size: 50px;
+    font-weight: bolder;
+    color: #fff;
+    margin: auto;
+    width: 100%;
+    overflow: hidden;
+    border: 0.5px solid #434647;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0px;
+}
+
+.content {
+    font-size: 20px;
+    background-color: rgb(239, 239, 239);
+    margin: auto;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    width: 100%;
+    padding: 10px;
+    min-height: 100%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+/* mobile devices */
+@media only screen and (max-width: 768px) {
+    .header_login {
+        background-color: #34393f;
+        text-align: center;
+        font-size: 25px;
+        font-weight: bolder;
+        color: #f4fcff;
+        margin: auto;
+        width: 100%;
+        overflow: hidden;
+        border: 0.5px solid #434647;
+        padding: 10px;
+        box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        top: 0px;
+    }
+
+    .content_login {
+        font-size: 20px;
+        background-color: #efefef;
+        margin: auto;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        width: 100%;
+        padding: 10px;
+        min-height: 27%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    .header {
+        background-color: #34393f;
+        text-align: center;
+        font-size: 50px;
+        font-weight: bolder;
+        color: #fff;
+        margin: auto;
+        width: 100%;
+        overflow: hidden;
+        border: 0.5px solid #434647;
+        padding: 10px;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        position: -webkit-sticky;
+        position: sticky;
+        top: 0px;
+    }
+
+    .content {
+        font-size: 20px;
+        background-color: rgb(239, 239, 239);
+        margin: auto;
+        margin-top: 2px;
+        margin-bottom: 2px;
+        width: 100%;
+        padding: 10px;
+        min-height: 100%;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+}
+
+/*********** INPUT ***********/
+.input_file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+}
+
+.input_file + label {
+    border: 1px solid #456a86;
+    color: #456a86;
+    padding: 12px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 99%;
+    cursor: pointer;
+    -webkit-transition: ease-out 0.2s;
+    -moz-transition: ease-out 0.2s;
+    transition: ease-out 0.2s;
+}
+
+.input_file:focus + label, .input_file + label:hover {
+    background-color: #456a86;
+    color: #fff;
+}
+
+.text_input {
+    border: 1px solid #456a86;
+    background-color: rgb(239, 239, 239);
+    color: #456a86;
+    width: 99%;
+    padding: 12px;
+    font-size: 16px;
+    font-family: 'Questrial';
+    -webkit-transition: ease-out 0.2s;
+    -moz-transition: ease-out 0.2s;
+    transition: ease-out 0.2s;
+}
+
+.text_input:focus, .text_input:hover {
+    background-color: #456a86;
+    color: #fff;
+}
+
+.text_input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: #456a86;
+    opacity: 1; /* Firefox */
+}
+
+.text_input:focus::placeholder, .text_input:hover::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: rgba(255, 255, 255, 0.56);
+    opacity: 1; /* Firefox */
+}
+
+/*********** BUTTON-ELEMENTS ***********/
+.button_element_login {
+    color: #f4fcff;
+    font-size: 16px;
+    text-align: center;
+    background-color: #1baea9;
+    margin: auto;
+    width: 100%;
+    padding: 15px;
+    -webkit-transition: ease-out 0.4s;
+    -moz-transition: ease-out 0.4s;
+    transition: ease-out 0.4s;
+}
+
+.button_element_login:focus, .button_element_login:hover {
+    background-color: #1a837e;
+}
+
+.button_element_logout {
+    border: 1px solid #fff;
+    color: #f4fcff;
+    font-size: 16px;
+    text-align: center;
+    margin: auto;
+    width: 100%;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    -webkit-transition: ease-out 0.2s;
+    -moz-transition: ease-out 0.2s;
+    transition: ease-out 0.2s;
+}
+
+.button_element_logout:focus, .button_element_logout:hover {
+    background-color: #fff;
+    color: #484d4f;
+}
+
+/*********** BUTTONS ***********/
+.button {
+    color: #fff;
+    background: #1baea9;
+    border: 1px solid #1baea9;
+    padding: 9px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 100%;
+    float: right;
+    cursor: pointer;
+    -webkit-transition: ease-out 0.4s;
+    -moz-transition: ease-out 0.4s;
+    transition: ease-out 0.4s;
+}
+
+.button:focus, .button:hover {
+    background-color: #1a837e;
+    border: 1px solid #1a837e;
+    color: #fff;
+}
+
+.button_delete {
+    color: #e0797a;
+    background: transparent;
+    border: none;
+    padding: 7px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.button_delete:focus, .button_delete:hover {
+    color: #ac5656;
+}
+
+.button_back {
+    color: #000;
+    padding: 6px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    background: transparent;
+    border: none;
+}
+
+.button_back:focus, .button_back:hover {
+    color: rgba(0, 0, 0, 0.54);
+}
+
+.top_button {
+    display: none;
+    float: right;
+    z-index: 99;
+    border: none;
+    outline: none;
+    background-color: #34393f;
+    color: white;
+    cursor: pointer;
+    padding: 10px;
+    font-size: 16px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-transition: ease-out 0.4s;
+    -moz-transition: ease-out 0.4s;
+    transition: ease-out 0.4s;
+}
+
+.top_button:hover {
+    background-color: #21252c;
+}
+
+.top_button_wrapper {
+    position: fixed;
+    bottom: 15px;
+    width: calc(50% - 25px);
+}
+
+/* mobile devices */
+@media only screen and (max-width: 768px) {
+    .top_button_wrapper {
+        width: calc(100% - 33px);
+    }
+}
+
+/*********** TABLES ***********/
+table {
+    width: 100%;
+    border-collapse: collapse;
+    word-break: break-all;
+}
+
+th {
+    border-bottom: 1px solid #9c9c9c;
+    border-top: 1px solid #9c9c9c;
+    text-align: left;
+    font-size: 16px;
+    background-color: rgb(217, 226, 230);
+    color: #34393f;
+}
+
+td {
+    padding: 0px;
+    border: 0px;
+    margin: 0px;
+}
+
+.table_link {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.table_data {
+    border-bottom: 1px solid #c6c6c6;
+}
+
+.content_table_row:focus, .content_table_row:hover {
+    background-color: rgb(223, 223, 223);
+}
+
+.table_content {
+    margin-bottom: 50px;
+}
+
+.icon_row {
+    width: 3%;
+    padding: 3px;
+}
+
+/*********** HEADLINES ***********/
+.sub-headline {
+    font-size: 15px;
+    color: #1baea9;
+}
+

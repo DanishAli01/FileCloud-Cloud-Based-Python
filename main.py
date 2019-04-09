@@ -15,11 +15,76 @@
 # limitations under the License.
 #
 import webapp2
+import re
+from handlers import uploadhandler, downloadhandler
+from operations import fileoperations, useroperations, directoryoperations
+from handlers import blobstore
+from operations import ndb
+from models.dir import Folder
+import Display
+
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):
-        self.response.write('Hello world!')
+        self.response.headers['Content-Type'] = 'text/html'
+        if useroperations.login_check():
+            if not useroperations.user_present_in_model():
+                useroperations.add_user(useroperations.get_current_user())
+            if self.request.get('directory_name') != '':
+                directoryoperations.nav_dir(self.request.get('directory_name'))
+
+            sort_dir = useroperations.sort_list(directoryoperations.get_directories_in_current_path())
+            sort_files = useroperations.sort_list(fileoperations.get_files_in_current_path())
+            sort_dir_names = useroperations.get_names_from_list(sort_dir)
+            sort_file_names = useroperations.get_names_from_list(sort_files)
+
+            Display.render_main(self,
+                                useroperations.get_logout_url(self),
+                                sort_dir_names,
+                                sort_file_names,
+                                directoryoperations.current_dir_obj().path,
+                                directoryoperations.is_in_root_directory(),
+                                blobstore.create_upload_url('/upload'))
+
+        else:
+            Display.render_login(self, useroperations.get_login_url(self))
+        # POST-request
+
+    def post(self):
+        self.response.headers['Content-Type'] = 'text/html'
+
+        button_value = self.request.get('button')
+
+        if button_value == 'Add':
+            absolute_name = re.sub(r"[/;]", '',self.request.get('value')).lstrip()
+            if not (absolute_name is None or absolute_name == ''):
+                directoryoperations.add_dir(absolute_name,directoryoperations.get_current_directory_key())
+            self.redirect('/')
+
+        elif button_value == 'Delete':
+            name,kind = self.request.get('name'),self.request.get('kind')
+            if kind == 'file':
+                fileoperations.delete(name)
+            elif kind == 'directory':
+                directoryoperations.delete_dir(name)
+            self.redirect('/')
+
+        elif button_value == 'Up':
+            user = useroperations.get_model_user()
+            if not directoryoperations.is_in_root_directory():
+                user.current_dir = directoryoperations.get_parent_directory_key()
+                user.put()
+            self.redirect('/')
+
+        elif button_value == 'Home':
+            user = useroperations.get_model_user()
+            user.current_dir = ndb.Key(Folder, user.key.id() + directoryoperations.slash)
+            user.put()
+            self.redirect('/')
+
 
 app = webapp2.WSGIApplication([
-    ('/', MainHandler)
+    ('/', MainHandler),
+    ('/upload', uploadhandler.UploadHandler),
+    ('/download', downloadhandler.DownloadHandler)
 ], debug=True)

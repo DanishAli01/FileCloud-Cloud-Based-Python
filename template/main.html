@@ -1,0 +1,197 @@
+<html>
+
+<head>
+    <meta charset="utf-8"/>
+    <title>Dropbox</title>
+
+    <link type="text/css" rel="stylesheet" href="/stylesheets/styles.css"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+    <script src="/scripts/script.js"></script>
+</head>
+
+<body onload="init()">
+<div class="header">
+    <div style="float:left; width:70%; text-align: left;">
+        Dropbox
+        <br>
+        <a class="sub-headline" style="color: #bdbdbd;">
+            You are logged in as
+        </a>
+        <a class="sub-headline">
+            {{ user.email() }}
+        </a>
+    </div>
+
+    <div style="float:right">
+        <a href="{{ url }}">
+            <div class="button_element_logout">
+                Logout
+            </div>
+        </a>
+
+        <form method="post" action="/">
+            <input type="hidden" name="button" value="Home">
+            <button class="button" style="padding: 5px; margin-top: 7px" title="Navigate to the root directory.">
+                <i class="material-icons">home</i>
+            </button>
+        </form>
+
+    </div>
+</div>
+
+<div class="content">
+
+    <table>
+        <!-- upload row -->
+        <tr>
+            <!-- form for uploading a file to the blobstore -->
+            <form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
+                <td>
+                    <input type="file" name="file" id="file_upload" class="input_file" multiple>
+                    <label class="file_upload_label" id="file_upload_label" for="file_upload">Choose a file...</label>
+                </td>
+                <td class="icon_row">
+                    <button type="submit" class="button" value="Upload">
+                        <i class="material-icons">file_upload</i>
+                    </button>
+                </td>
+            </form>
+        </tr>
+
+        <!-- add directory row -->
+        <tr>
+            <form method="post" action="/">
+                <td>
+                    <input type="text" class="text_input" name="value" id="text_input"
+                           placeholder="Add a new directory..."/>
+                </td>
+
+                <td class="icon_row">
+                    <button type="submit" class="button" name="button" value="Add">
+                        <i class="material-icons">add</i>
+                    </button>
+                </td>
+            </form>
+        </tr>
+    </table>
+
+    <br>
+
+    <table class="table_content">
+
+        {% if is_not_in_root %}
+            <tr>
+                <!-- icon -->
+                <th class="icon_row">
+                    <i class="material-icons">folder_open</i>
+                </th>
+
+                <!-- current path -->
+                <th colspan="2">
+                    {{ current_path }}
+                </th>
+
+                <!-- navigate up link -->
+                <th class="icon_row">
+                    <form method="post" action="/" style="margin: 0px;">
+                        <button type="submit" name="button" class="button_back" value="Up">
+                            <i class="material-icons">keyboard_arrow_left</i>
+                        </button>
+                    </form>
+                </th>
+
+            </tr>
+
+        {% else %}
+            <tr>
+                <!-- icon -->
+                <th class="icon_row">
+                    <i class="material-icons" style="padding-top: 7px; padding-bottom: 7px">folder_open</i>
+                </th>
+
+                <!-- current path -->
+                <th colspan="3">
+                    {{ current_path }}
+                </th>
+            </tr>
+        {% endif %}
+
+
+
+        {% if directories %}
+            {% for directory in directories %}
+                <tr class="content_table_row">
+                    <!-- icon -->
+                    <td class="table_data icon_row">
+                        <a href="/?directory_name={{ directory }}">
+                            <i class="material-icons">folder</i>
+                        </a>
+                    </td>
+
+                    <!-- directory name + link -->
+                    <td class="table_data" colspan="2">
+                        <a href="/?directory_name={{ directory }}" class="table_link">
+                            {{ directory }}
+                        </a>
+                    </td>
+
+                    <!-- delete button -->
+                    <td class="table_data icon_row">
+                        <form method="post" action="/" style="margin: 0px;">
+                            <input type="hidden" name="name" value="{{ directory }}"/>
+                            <input type="hidden" name="kind" value="directory"/>
+                            <button type="submit" name="button" class="button_delete" value="Delete">
+                                <i class="material-icons">delete</i>
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
+            {% endfor %}
+        {% endif %}
+
+        {% if files %}
+            {% for file in files %}
+                <tr class="content_table_row">
+                    <!-- icon -->
+                    <td class="table_data icon_row">
+                        <a href="/download?file_name={{ file }}">
+                            <i class="material-icons">insert_drive_file</i>
+                        </a>
+                    </td>
+
+                    <!-- filename + download link -->
+                    <td class="table_data" colspan="2">
+                        <a href="/download?file_name={{ file }}" class="table_link">
+                            {{ file }}
+                        </a>
+                    </td>
+
+                    <!-- delete button -->
+                    <td class="table_data icon_row">
+                        <form method="post" action="/" style="margin: 0px;">
+                            <input type="hidden" name="name" value="{{ file }}"/>
+                            <input type="hidden" name="kind" value="file"/>
+                            <button type="submit" name="button" class="button_delete" value="Delete">
+                                <i class="material-icons">delete</i>
+                            </button>
+                        </form>
+                    </td>
+
+                </tr>
+            {% endfor %}
+        {% endif %}
+    </table>
+
+    <div class="top_button_wrapper">
+        <button id="top_button" class="top_button">
+            <i class="material-icons">keyboard_arrow_up</i>
+        </button>
+    </div>
+
+</div>
+</body>
+
+</html>
