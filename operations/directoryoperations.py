@@ -1,8 +1,6 @@
-from . import users as ndbusers
-from . import User as modeluser
+import useroperations as useroperations
 from . import Folder as modelfolder
 from . import ndb
-import useroperations as userop
 
 slash = "/"
 rootname = "root"
@@ -15,22 +13,22 @@ def current_dir_obj():
 
 # returns key of current directory
 def get_current_directory_key():
-    user = userop.get_model_user()
-    return user.current_dir
+    user = useroperations.get_model_user()
+    return user.c_dir
 
 
 # returns key of root directory
 def get_parent_directory_key():
-    return get_current_directory_key().get.root_dir
+    return get_current_directory_key().get().root_dir
 
 
 def set_root_directory(my_user):
-    directory_id = my_user.key.id() + '/'
+    directory_id = my_user.key.id() + slash
     directory = modelfolder(id=directory_id)
 
     directory.parent_directory = None
-    directory.name = 'root'
-    directory.path = '/'
+    directory.name = rootname
+    directory.path = slash
     directory.put()
 
     my_user.root_directory = directory.key
@@ -63,8 +61,8 @@ def contains(key, list):
     return key not in list
 
 
-def add_dir(name, parent):
-    user = userop.get_model_user()
+def add_dir(name, parent,datetime):
+    user = useroperations.get_model_user()
     parent_object = parent.get()
     p = get_path(name, parent_object)
     id = user.key.id() + p
@@ -78,11 +76,12 @@ def add_dir(name, parent):
         dir.root_dir = parent
         dir.name = name
         dir.path = p
+        dir.date = datetime
         dir.put()
 
 
 def delete_dir(name):
-    my_user = userop.get_model_user()
+    my_user = useroperations.get_model_user()
 
     # current directory is the parent directory of the one that will be deleted
     parent_directory_object = current_dir_obj()
@@ -93,7 +92,7 @@ def delete_dir(name):
 
     if dir_is_empty_check(directory_object):
         # Delete reference to this object from parent_directory
-        parent_directory_object.dirs.remove(directory_key)
+        parent_directory_object.drs.remove(directory_key)
         parent_directory_object.put()
 
         # Delete directory object from datastore
@@ -101,14 +100,14 @@ def delete_dir(name):
 
 
 def home():
-    user = userop.get_model_user()
-    user.current_dir = ndb.Key(modelfolder, user.key.id() + slash)
+    user = useroperations.get_model_user()
+    user.c_dir = ndb.Key(modelfolder, user.key.id() + slash)
     user.put()
 
 
 def nav_dir(name):
-    user = userop.get_model_user()
+    user = useroperations.get_model_user()
     path = user.key.id() + get_path(name, current_dir_obj())
     key = ndb.Key(modelfolder, path)
-    user.current_dir = key
+    user.c_dir = key
     user.put()

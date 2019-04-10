@@ -5,6 +5,7 @@ from . import ndb
 from . import File
 from . import blobstore
 from . import Folder
+import datetime
 
 
 def get_files_in_current_path():
@@ -20,7 +21,7 @@ def file_object(file_name):
     return key.get()
 
 
-def add(upload, filename):
+def add(upload, filename, datetime):
     user = userop.get_model_user()
     current_dir = dirop.current_dir_obj()
     id = user.key.id() + dirop.get_path(filename, current_dir)
@@ -28,6 +29,7 @@ def add(upload, filename):
     if dirop.contains(key, current_dir.files):
         object = File(id=id)
         object.name = filename
+        object.date = datetime
         object.blob = upload.key()
         object.put()
 
@@ -46,7 +48,8 @@ def delete(name):
     key = ndb.Key(File, id)
     blobobj = key.get().blob
     object.files.remove(key)
-    object.put()
     blobstore.delete(blobobj)
     key.delete()
+    object.put()
+
 

@@ -44,7 +44,7 @@ def add_user(user):
     fromdirectoryoperations.set_root_directory(my_user)
 
     # set current path on first login to root directory
-    my_user.current_dir = ndb.Key(modelfolder, my_user.key.id() + '/')
+    my_user.c_dir = ndb.Key(modelfolder, my_user.key.id() + fromdirectoryoperations.slash)
     my_user.put()
 
 
@@ -53,13 +53,9 @@ def get_names_from_list(elements):
     names = list()
 
     for element in elements:
-        names.append(element.get().name)
+        names.append(element.get().name+":"+element.get().date.strftime("%B %d, %Y,%M%p"))
 
     return names
-
-
-def prepare_directory_name(directory_name):
-    return re.sub(r"[/;]", '', ' ', directory_name).lstrip()
 
 
 def sort_list(list):
@@ -68,7 +64,6 @@ def sort_list(list):
 
 def get_login_url(main_page):
     return ndbusers.create_login_url(main_page.request.uri)
-
 
 def get_logout_url(main_page):
     return ndbusers.create_logout_url(main_page.request.uri)

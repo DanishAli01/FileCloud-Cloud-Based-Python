@@ -14,6 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+import datetime
+
 import webapp2
 import re
 from handlers import uploadhandler, downloadhandler
@@ -48,7 +50,7 @@ class MainHandler(webapp2.RequestHandler):
 
         else:
             Display.render_login(self, useroperations.get_login_url(self))
-        # POST-request
+
 
     def post(self):
         self.response.headers['Content-Type'] = 'text/html'
@@ -58,7 +60,7 @@ class MainHandler(webapp2.RequestHandler):
         if button_value == 'Add':
             absolute_name = re.sub(r"[/;]", '',self.request.get('value')).lstrip()
             if not (absolute_name is None or absolute_name == ''):
-                directoryoperations.add_dir(absolute_name,directoryoperations.get_current_directory_key())
+                directoryoperations.add_dir(absolute_name,directoryoperations.get_current_directory_key(),datetime.datetime.now())
             self.redirect('/')
 
         elif button_value == 'Delete':

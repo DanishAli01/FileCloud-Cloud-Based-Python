@@ -8,20 +8,17 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial">
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
-    <script src="/scripts/script.js"></script>
+
 </head>
 
-<body onload="init()">
+<body>
 <div class="header">
-    <div style="float:left; width:70%; text-align: left;">
-        Dropbox
-        <br>
+    <p style="float: right; font-size:medium; border-style:solid; border-color:#ffffff;padding: 10px;">     User : &nbsp  {{ user.email().split('@')[0] }}</p>
+    <div>
+       <h1 class='elegantshadow'>FILE&nbspCLOUD</h1><hr><em style="font-size: small;">(A DropBox Replica)</em>
         <a class="sub-headline" style="color: #bdbdbd;">
-            You are logged in as
         </a>
-        <a class="sub-headline">
-            {{ user.email() }}
-        </a>
+
     </div>
 
     <div style="float:right">
@@ -30,14 +27,16 @@
                 Logout
             </div>
         </a>
-
+    </div>
+    <div style="float: left;">
         <form method="post" action="/">
             <input type="hidden" name="button" value="Home">
-            <button class="button" style="padding: 5px; margin-top: 7px" title="Navigate to the root directory.">
-                <i class="material-icons">home</i>
+            <button class="button">
+                <div class="button_element_logout">
+                Home
+            </div>
             </button>
         </form>
-
     </div>
 </div>
 
@@ -46,8 +45,8 @@
     <table>
         <!-- upload row -->
         <tr>
-            <!-- form for uploading a file to the blobstore -->
-            <form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
+             <!--form for uploading a file to the blobstore-->
+              <form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
                 <td>
                     <input type="file" name="file" id="file_upload" class="input_file" multiple>
                     <label class="file_upload_label" id="file_upload_label" for="file_upload">Choose a file...</label>
@@ -59,6 +58,10 @@
                 </td>
             </form>
         </tr>
+
+
+
+
 
         <!-- add directory row -->
         <tr>
@@ -74,6 +77,7 @@
                     </button>
                 </td>
             </form>
+
         </tr>
     </table>
 
@@ -185,13 +189,19 @@
         {% endif %}
     </table>
 
-    <div class="top_button_wrapper">
-        <button id="top_button" class="top_button">
-            <i class="material-icons">keyboard_arrow_up</i>
-        </button>
+</div>
+<div class="header">
+
+    <div>
+    <hr><h1 class='elegantshadow' style="font-size: small;">Designed By: Danish Ali GCD</h1>
+        <a class="sub-headline" style="color: #bdbdbd;">
+        </a>
+
     </div>
 
+
 </div>
+
 </body>
 
 </html>
