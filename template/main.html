@@ -119,7 +119,18 @@
                 <th colspan="3">
                     {{ current_path }}
                 </th>
+                <th class="table_data" colspan="2">
+
+                    </th>
+                <th class="table_data" colspan="2">
+
+                    </th>
+                 <th class="table_data" colspan="2">
+
+                    </th>
+
             </tr>
+
         {% endif %}
 
 
@@ -140,6 +151,15 @@
                             {{ directory }}
                         </a>
                     </td>
+                    <td class="table_data" colspan="2">
+
+                    </td>
+                    <td class="table_data" colspan="2">
+
+                    </td>
+                      <td class="table_data" colspan="2">
+
+                    </td>
 
                     <!-- delete button -->
                     <td class="table_data icon_row">
@@ -157,7 +177,11 @@
         {% endif %}
 
         {% if files %}
-            {% for file in files %}
+
+            {% for i in range(len) %}
+
+
+
                 <tr class="content_table_row">
                     <!-- icon -->
                     <td class="table_data icon_row">
@@ -167,16 +191,26 @@
                     </td>
 
                     <!-- filename + download link -->
-                    <td class="table_data" colspan="2">
+                    <td class="table_data" colspan="2" id = "id_content">
                         <a href="/download?file_name={{ file }}" class="table_link">
-                            {{ file }}
+                            {{ files[i].split('.')[0] }}
+
                         </a>
+                    </td>
+                    <td class="table_data" colspan="2"id = "id_content2">
+                        {{size[i]}} Bytes
+                    </td>
+                    <td class="table_data" colspan="2">
+                        {{create[i] }}
+                    </td>
+                    <td class="table_data" colspan="2">
+                        {{kind[i].split('/')[0]}}
                     </td>
 
                     <!-- delete button -->
                     <td class="table_data icon_row">
                         <form method="post" action="/" style="margin: 0px;">
-                            <input type="hidden" name="name" value="{{ file }}"/>
+                            <input type="hidden" name="name" value="{{ files[i] }}"/>
                             <input type="hidden" name="kind" value="file"/>
                             <button type="submit" name="button" class="button_delete" value="Delete">
                                 <i class="material-icons">delete</i>
@@ -185,7 +219,8 @@
                     </td>
 
                 </tr>
-            {% endfor %}
+
+        {% endfor %}
         {% endif %}
     </table>
 

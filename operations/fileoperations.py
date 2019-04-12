@@ -1,21 +1,22 @@
 import logging
-import directoryoperations as dirop
+from directoryoperations import get_path, contains, current_dir_obj
 import useroperations as userop
 from . import ndb
-from . import File
+from models.file import File
 from . import blobstore
-from . import Folder
+from models.dir import Folder
 import datetime
+import models.file as m
 
 
 def get_files_in_current_path():
-    return dirop.current_dir_obj().files
+    return current_dir_obj().files
 
 
 def file_object(file_name):
     user = userop.get_model_user()
-    root_dir_object = dirop.current_dir_obj()
-    path = dirop.get_path(file_name, root_dir_object)
+    root_dir_object = current_dir_obj()
+    path = get_path(file_name, root_dir_object)
     id = user.key.id() + path
     key = ndb.Key(File, id)
     return key.get()
@@ -23,10 +24,10 @@ def file_object(file_name):
 
 def add(upload, filename, datetime):
     user = userop.get_model_user()
-    current_dir = dirop.current_dir_obj()
-    id = user.key.id() + dirop.get_path(filename, current_dir)
+    current_dir = current_dir_obj()
+    id = user.key.id() + get_path(filename, current_dir)
     key = ndb.Key(File, id)
-    if dirop.contains(key, current_dir.files):
+    if contains(key, current_dir.files):
         object = File(id=id)
         object.name = filename
         object.date = datetime
@@ -42,8 +43,8 @@ def add(upload, filename, datetime):
 
 def delete(name):
     user = userop.get_model_user()
-    object = dirop.current_dir_obj()
-    p = dirop.get_path(name, object)
+    object = current_dir_obj()
+    p = get_path(name, object)
     id = user.key.id() + p
     key = ndb.Key(File, id)
     blobobj = key.get().blob
@@ -53,3 +54,8 @@ def delete(name):
     object.put()
 
 
+# def add_details(files):
+#
+#     for file in files:
+#         key = file.key
+#     return m.get_file_creation(key)

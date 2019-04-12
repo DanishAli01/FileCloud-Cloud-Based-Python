@@ -1,10 +1,11 @@
 import re
 
 from . import users as ndbusers
-from . import User as modeluser
+from models.user import User
 from . import ndb
 import directoryoperations as fromdirectoryoperations
-from . import Folder as modelfolder
+from models.dir import Folder as modelfolder
+import models.file
 
 
 # Get user from this page
@@ -18,7 +19,7 @@ def get_model_user():
     user = get_current_user()
     if user:
         # retrive user from models using key
-        user_key = ndb.Key(modeluser, user.user_id())
+        user_key = ndb.Key(User, user.user_id())
         return user_key.get()
 
 
@@ -40,7 +41,7 @@ def user_present_in_model():
 
 
 def add_user(user):
-    my_user = modeluser(id=user.user_id())
+    my_user = User(id=user.user_id())
     fromdirectoryoperations.set_root_directory(my_user)
 
     # set current path on first login to root directory
@@ -53,9 +54,29 @@ def get_names_from_list(elements):
     names = list()
 
     for element in elements:
-        names.append(element.get().name+":"+element.get().date.strftime("%B %d, %Y,%M%p"))
-
+        names.append(element.get().name)
     return names
+
+
+def get_file_size(files):
+    size = list()
+    for e in files:
+        size.append(models.file.get_file_size(e.get().blob))
+    return size
+
+
+def get_file_creation(files):
+    size = list()
+    for e in files:
+        size.append(models.file.get_file_creation(e.get().blob))
+    return size
+
+
+def get_file_kind(files):
+    size = list()
+    for e in files:
+        size.append(models.file.get_file_type(e.get().blob))
+    return size
 
 
 def sort_list(list):
@@ -64,6 +85,7 @@ def sort_list(list):
 
 def get_login_url(main_page):
     return ndbusers.create_login_url(main_page.request.uri)
+
 
 def get_logout_url(main_page):
     return ndbusers.create_logout_url(main_page.request.uri)

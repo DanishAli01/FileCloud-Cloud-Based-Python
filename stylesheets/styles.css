@@ -338,6 +338,7 @@ th {
     font-size: 16px;
     background-color: rgb(217, 226, 230);
     color: #34393f;
+    width: auto;
 }
 
 td {
@@ -348,12 +349,18 @@ td {
 
 .table_link {
     display: block;
-    width: 100%;
-    height: 100%;
+
 }
 
 .table_data {
     border-bottom: 1px solid #c6c6c6;
+
+}
+#id_content{
+    width: 20%;
+}
+#id_content2{
+    width: 10%;
 }
 
 .content_table_row:focus, .content_table_row:hover {

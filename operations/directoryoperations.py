@@ -1,5 +1,5 @@
-import useroperations as useroperations
-from . import Folder as modelfolder
+from operations import useroperations
+from models.dir import Folder as modelfolder
 from . import ndb
 
 slash = "/"
@@ -61,7 +61,7 @@ def contains(key, list):
     return key not in list
 
 
-def add_dir(name, parent,datetime):
+def add_dir(name, parent):
     user = useroperations.get_model_user()
     parent_object = parent.get()
     p = get_path(name, parent_object)
@@ -76,7 +76,6 @@ def add_dir(name, parent,datetime):
         dir.root_dir = parent
         dir.name = name
         dir.path = p
-        dir.date = datetime
         dir.put()
 
 
