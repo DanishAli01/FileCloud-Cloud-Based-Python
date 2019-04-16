@@ -18,14 +18,13 @@ import datetime
 
 import webapp2
 import re
-from handlers import downloadhandler,uploadhandler
+from handlers import downloadhandler, uploadhandler
 from operations import fileoperations, useroperations, directoryoperations
 from handlers import blobstore
 from operations import ndb
 from models.dir import Folder
-from  models.file import File
+from models.file import File
 import Display
-
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -36,16 +35,17 @@ class MainHandler(webapp2.RequestHandler):
                 useroperations.add_user(useroperations.get_current_user())
             if self.request.get('directory_name') != '':
                 directoryoperations.nav_dir(self.request.get('directory_name'))
+                self.redirect('/')
 
             sort_dir = useroperations.sort_list(directoryoperations.get_directories_in_current_path())
             sort_files = useroperations.sort_list(fileoperations.get_files_in_current_path())
-            sort_dir_names = useroperations.get_names_from_list(sort_dir)
-            sort_file_names = useroperations.get_names_from_list(sort_files)
-            sort_file_size = useroperations.get_file_size(sort_files)
-            sort_file_create = useroperations.get_file_creation(sort_files)
-            sort_file_kind = useroperations.get_file_kind(sort_files)
-            length = len(sort_file_names)
 
+            sort_dir_names = useroperations.get_names_from_list(directoryoperations.get_directories_in_current_path())
+            sort_file_names = useroperations.get_names_from_list(fileoperations.get_files_in_current_path())
+            sort_file_size = useroperations.get_file_size(fileoperations.get_files_in_current_path())
+            sort_file_create = useroperations.get_file_creation(fileoperations.get_files_in_current_path())
+            sort_file_kind = useroperations.get_file_kind(fileoperations.get_files_in_current_path())
+            length = len(sort_file_names)
 
             Display.render_main(self,
                                 useroperations.get_logout_url(self),
@@ -55,6 +55,7 @@ class MainHandler(webapp2.RequestHandler):
                                 sort_file_create,
                                 sort_file_kind,
                                 length,
+                                uploadhandler.UploadHandler.e,
                                 directoryoperations.current_dir_obj().path,
                                 directoryoperations.is_in_root_directory(),
                                 blobstore.create_upload_url('/upload'))
@@ -62,20 +63,19 @@ class MainHandler(webapp2.RequestHandler):
         else:
             Display.render_login(self, useroperations.get_login_url(self))
 
-
     def post(self):
         self.response.headers['Content-Type'] = 'text/html'
 
         button_value = self.request.get('button')
 
         if button_value == 'Add':
-            absolute_name = re.sub(r"[/;]", '',self.request.get('value')).lstrip()
+            absolute_name = re.sub(r"[/;]", '', self.request.get('value')).lstrip()
             if not (absolute_name is None or absolute_name == ''):
-                directoryoperations.add_dir(absolute_name,directoryoperations.get_current_directory_key())
+                directoryoperations.add_dir(absolute_name, directoryoperations.get_current_directory_key())
             self.redirect('/')
 
         elif button_value == 'Delete':
-            name,kind = self.request.get('name'),self.request.get('kind')
+            name, kind = self.request.get('name'), self.request.get('kind')
             if kind == 'file':
                 fileoperations.delete(name)
             elif kind == 'directory':

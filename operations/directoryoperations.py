@@ -36,7 +36,7 @@ def set_root_directory(my_user):
 
 
 def get_directories_in_current_path():
-    return current_dir_obj().drs
+    return get_current_directory_key().get().directs
 
 
 # returns true if current directory is root directory
@@ -49,11 +49,11 @@ def get_path(n, parent_dir_object):
     if is_in_root_directory():
         return parent_dir_object.path + n
     else:
-        return parent_dir_object.path + slash + n
+        return parent_dir_object.path + "/" + n
 
 
 def dir_is_empty_check(dir):
-    return not dir.files and not dir.drs
+    return not dir.files and not dir.directs
 
 
 # checks if a key is in a list of keys, if so returns true
@@ -63,14 +63,15 @@ def contains(key, list):
 
 def add_dir(name, parent):
     user = useroperations.get_model_user()
+    parent_object = modelfolder()
     parent_object = parent.get()
     p = get_path(name, parent_object)
     id = user.key.id() + p
     dir = modelfolder(id=id)
     dir_key = dir.key
 
-    if contains(dir_key, parent_object.drs):
-        parent_object.drs.append(dir_key)
+    if contains(dir_key, parent_object.directs):
+        parent_object.directs.append(dir_key)
         parent_object.put()
         # Set all attributes of the directory and save it to datastore
         dir.root_dir = parent
@@ -86,27 +87,27 @@ def delete_dir(name):
     parent_directory_object = current_dir_obj()
 
     directory_id = my_user.key.id() + get_path(name, parent_directory_object)
-    directory_key = ndb.Key(modelfolder, directory_id)
+    directory_key = ndb.Key("Folder", directory_id)
     directory_object = directory_key.get()
 
     if dir_is_empty_check(directory_object):
         # Delete reference to this object from parent_directory
-        parent_directory_object.drs.remove(directory_key)
+        parent_directory_object.directs.remove(directory_key)
         parent_directory_object.put()
 
-        # Delete directory object from datastore
         directory_key.delete()
+
 
 
 def home():
     user = useroperations.get_model_user()
-    user.c_dir = ndb.Key(modelfolder, user.key.id() + slash)
+    user.c_dir = ndb.Key("Folder", user.key.id() + slash)
     user.put()
 
 
 def nav_dir(name):
     user = useroperations.get_model_user()
     path = user.key.id() + get_path(name, current_dir_obj())
-    key = ndb.Key(modelfolder, path)
+    key = ndb.Key("Folder", path)
     user.c_dir = key
     user.put()

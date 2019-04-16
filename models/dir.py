@@ -9,4 +9,7 @@ class Folder(ndb.Model):
     # The key of the directory to navigate and interact with root
     # all sub directories of given directory
     # keys of all the files in given directory
-    root_dir, drs, files = ndb.KeyProperty(), ndb.KeyProperty(repeated=True), ndb.KeyProperty(repeated=True)
+    root_dir, directs, files = ndb.KeyProperty(), ndb.KeyProperty(repeated=True), ndb.KeyProperty(repeated=True)
+
+    # def delete_directs_name(self, name):
+    #     self.directs.remove(name)

@@ -16,7 +16,7 @@
     <p style="float: right; font-size:medium; border-style:solid; border-color:#ffffff;padding: 10px;">     User : &nbsp  {{ user.email().split('@')[0] }}</p>
     <div>
        <h1 class='elegantshadow'>FILE&nbspCLOUD</h1><hr><em style="font-size: small;">(A DropBox Replica)</em>
-        <a class="sub-headline" style="color: #bdbdbd;">
+        <a class="sub" style="color: #bdbdbd;">
         </a>
 
     </div>
@@ -42,14 +42,17 @@
 
 <div class="content">
 
+    <h3 style="text-align: center">Operations:</h3>
+    <hr>
+    <h4>{{error}}</h4>
     <table>
-        <!-- upload row -->
+
         <tr>
-             <!--form for uploading a file to the blobstore-->
+
               <form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
                 <td>
                     <input type="file" name="file" id="file_upload" class="input_file" multiple>
-                    <label class="file_upload_label" id="file_upload_label" for="file_upload">Choose a file...</label>
+                    <label class="file_upload_label" id="file_upload_label" for="file_upload">File Uploader...</label>
                 </td>
                 <td class="icon_row">
                     <button type="submit" class="button" value="Upload">
@@ -59,8 +62,7 @@
             </form>
         </tr>
 
-
-
+        <tr>    &nbsp&nbsp</tr>
 
 
         <!-- add directory row -->
@@ -81,21 +83,32 @@
         </tr>
     </table>
 
-    <br>
+<!--File/Diorectory Display-->
+
+    <hr>
 
     <table class="table_content">
 
         {% if is_not_in_root %}
             <tr>
                 <!-- icon -->
-                <th class="icon_row">
-                    <i class="material-icons">folder_open</i>
+                <th class="icon_row" style="font-style: normal">
+                    <bold>Path:</bold>
                 </th>
 
                 <!-- current path -->
                 <th colspan="2">
                     {{ current_path }}
                 </th>
+                <th class="table_data" colspan="2">
+
+                    </th>
+                <th class="table_data" colspan="2">
+
+                    </th>
+                 <th class="table_data" colspan="2">
+
+                    </th>
 
                 <!-- navigate up link -->
                 <th class="icon_row">
@@ -134,7 +147,8 @@
         {% endif %}
 
 
-
+ <h3 style="text-align: center">On Cloud:</h3>
+    <hr>
         {% if directories %}
             {% for directory in directories %}
                 <tr class="content_table_row">
@@ -145,21 +159,43 @@
                         </a>
                     </td>
 
+
                     <!-- directory name + link -->
                     <td class="table_data" colspan="2">
                         <a href="/?directory_name={{ directory }}" class="table_link">
                             {{ directory }}
                         </a>
                     </td>
-                    <td class="table_data" colspan="2">
+
+                    <td class="table_data">
+                        &nbsp&nbsp
 
                     </td>
-                    <td class="table_data" colspan="2">
+                       <td class="table_data">
+                        &nbsp&nbsp
 
                     </td>
-                      <td class="table_data" colspan="2">
+                       <td class="table_data">
+                        &nbsp&nbsp
 
                     </td>
+                       <td class="table_data">
+                        &nbsp&nbsp
+
+                    </td>   <td class="table_data">
+                        &nbsp&nbsp
+
+                    </td>
+                     </td>   <td class="table_data">
+                        &nbsp&nbsp
+
+                    </td>
+
+
+
+
+
+
 
                     <!-- delete button -->
                     <td class="table_data icon_row">
@@ -185,14 +221,14 @@
                 <tr class="content_table_row">
                     <!-- icon -->
                     <td class="table_data icon_row">
-                        <a href="/download?file_name={{ file }}">
+                        <a href="/download?file_name={{ files[i] }}">
                             <i class="material-icons">insert_drive_file</i>
                         </a>
                     </td>
 
                     <!-- filename + download link -->
                     <td class="table_data" colspan="2" id = "id_content">
-                        <a href="/download?file_name={{ file }}" class="table_link">
+                        <a href="/download?file_name={{ files[i] }}" class="table_link">
                             {{ files[i].split('.')[0] }}
 
                         </a>
@@ -229,8 +265,7 @@
 
     <div>
     <hr><h1 class='elegantshadow' style="font-size: small;">Designed By: Danish Ali GCD</h1>
-        <a class="sub-headline" style="color: #bdbdbd;">
-        </a>
+
 
     </div>
 

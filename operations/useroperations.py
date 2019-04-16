@@ -19,7 +19,7 @@ def get_model_user():
     user = get_current_user()
     if user:
         # retrive user from models using key
-        user_key = ndb.Key(User, user.user_id())
+        user_key = ndb.Key("User", user.user_id())
         return user_key.get()
 
 
@@ -45,7 +45,7 @@ def add_user(user):
     fromdirectoryoperations.set_root_directory(my_user)
 
     # set current path on first login to root directory
-    my_user.c_dir = ndb.Key(modelfolder, my_user.key.id() + fromdirectoryoperations.slash)
+    my_user.c_dir = ndb.Key("Folder", my_user.key.id() + fromdirectoryoperations.slash)
     my_user.put()
 
 
