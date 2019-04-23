@@ -6,6 +6,7 @@ from . import ndb
 
 
 def get_files_in_current_path():
+    print current_dir_obj().files
     return current_dir_obj().files
 
 
@@ -61,3 +62,4 @@ def delete(name):
     blobstore.delete(blobobj)
     key.delete()
     object.put()
+
