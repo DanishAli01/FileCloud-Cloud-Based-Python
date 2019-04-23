@@ -19,5 +19,6 @@ def get_file_type(file_key):
 def get_file_creation(file_key):
     return blobstore.BlobInfo(file_key).creation.strftime("%d %B %Y, %I:%M%p")
 
+
 def get_file_name(file_key):
     return blobstore.BlobInfo(file_key).filename

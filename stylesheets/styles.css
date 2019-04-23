@@ -375,7 +375,7 @@ a:visited {
     font-size: 50px;
     color: #f4fcff;
     margin: auto;
-    width: 30%;
+    width: 20%;
     overflow: hidden;
     border: 1px solid #434647;
     padding: 15px;
@@ -389,7 +389,7 @@ a:visited {
     margin: auto;
     margin-top: 2px;
     margin-bottom: 2px;
-    width: 30%;
+    width: 20%;
     padding: 10px;
     min-height: 27%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -412,6 +412,10 @@ a:visited {
 }
 
 .content {
+    background-image: url("content-back.png");
+    background-repeat: no-repeat;
+     background-position: center;
+    background-attachment: fixed;
     font-size: 20px;
     background-color: rgb(239, 239, 239);
     margin: auto;
@@ -423,62 +427,6 @@ a:visited {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-/* mobile devices */
-@media only screen and (max-width: 768px) {
-    .header_login {
-        background-color: #34393f;
-        text-align: center;
-        font-size: 25px;
-        font-weight: bolder;
-        color: #f4fcff;
-        margin: auto;
-        width: 100%;
-        overflow: hidden;
-        border: 0.5px solid #434647;
-        padding: 10px;
-        box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        top: 0px;
-    }
-
-    .content_login {
-        font-size: 20px;
-        background-color: #efefef;
-        margin: auto;
-        margin-top: 2px;
-        margin-bottom: 2px;
-        width: 100%;
-        padding: 10px;
-        min-height: 27%;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-
-    .header {
-        background-color: #34393f;
-        text-align: center;
-        font-size: 50px;
-        font-weight: bolder;
-        color: #fff;
-        margin: auto;
-        width: 100%;
-        overflow: hidden;
-        border: 0.5px solid #434647;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-        position: -webkit-sticky;
-        position: sticky;
-        top: 0px;
-    }
-
-    .content {
-        font-size: 20px;
-        margin: auto;
-        margin-top: 2px;
-        margin-bottom: 2px;
-        width: 100%;
-        padding: 10px;
-        min-height: 100%;
-        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    }
-}
 
 /*********** INPUT ***********/
 .input_file {
@@ -491,8 +439,9 @@ a:visited {
 }
 
 .input_file + label {
-    border: 1px solid #456a86;
-    color: #456a86;
+    border: 1px solid #333;
+    margin-bottom: 20px;
+    color: #333;
     padding: 12px;
     text-align: left;
     text-decoration: none;
@@ -506,14 +455,14 @@ a:visited {
 }
 
 .input_file:focus + label, .input_file + label:hover {
-    background-color: #456a86;
+    background-color: #333;
     color: #fff;
 }
 
 .text_input {
-    border: 1px solid #456a86;
+    border: 1px solid #333;
     background-color: rgb(239, 239, 239);
-    color: #456a86;
+    color: #333;
     width: 99%;
     padding: 12px;
     font-size: 16px;
@@ -524,12 +473,12 @@ a:visited {
 }
 
 .text_input:focus, .text_input:hover {
-    background-color: #456a86;
+    background-color: #333;
     color: #fff;
 }
 
 .text_input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
-    color: #456a86;
+    color: #333;
     opacity: 1; /* Firefox */
 }
 
@@ -543,7 +492,7 @@ a:visited {
     color: #f4fcff;
     font-size: 16px;
     text-align: center;
-    background-color: #1baea9;
+    background-color: #333;
     margin: auto;
     width: 100%;
     padding: 15px;
@@ -553,7 +502,7 @@ a:visited {
 }
 
 .button_element_login:focus, .button_element_login:hover {
-    background-color: #1a837e;
+    background-color: #333;
 }
 
 .button_element_logout {
@@ -675,13 +624,14 @@ table {
 }
 
 th {
+    background: #1a1a1a;
     border-bottom: 1px solid #9c9c9c;
     border-top: 1px solid #9c9c9c;
     text-align: left;
     font-size: 16px;
     font-style: italic;
     font-weight: bold;
-    color: #34393f;
+    color: #ffffff;
     width: auto;
 }
 
@@ -697,7 +647,8 @@ td {
 
 }
 
-.table_data {
+.data {
+
     border-bottom: 1px solid #c6c6c6;
 
 }

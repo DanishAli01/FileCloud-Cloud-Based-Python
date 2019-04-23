@@ -65,6 +65,13 @@ def get_file_size(files):
     return size
 
 
+def get_total_totalsize(files):
+    totalsize = 0;
+    for e in files:
+        totalsize += models.file.get_file_size(e.get().blob)
+    return totalsize;
+
+
 def get_file_creation(files):
     size = list()
     for e in files:

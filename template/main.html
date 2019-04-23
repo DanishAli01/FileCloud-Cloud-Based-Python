@@ -2,7 +2,7 @@
 
 <head>
     <meta charset="utf-8"/>
-    <title>Dropbox</title>
+    <title>FileCloud</title>
 
     <link type="text/css" rel="stylesheet" href="/stylesheets/styles.css"/>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Questrial">
@@ -16,6 +16,11 @@
     <p style="float: right; font-size:medium; border-style:solid; border-color:#ffffff;padding: 10px;">     User : &nbsp  {{ user.email().split('@')[0] }}</p>
     <div>
        <h1 class='elegantshadow'>FILE&nbspCLOUD</h1><hr><em style="font-size: small;">(A DropBox Replica)</em>
+        <div style="display: flex; justify-content:center ">
+            <h6 style="padding-right: 50px; background-color: #f4fcff; color: #333">&nbsp{{totalSize}}</h6>
+            <h6 style="padding-right: 50px; background-color: #f4fcff; color: #333">{{totalDirs}} </h6>
+            <h6 style="padding-right: 50px; background-color: #f4fcff; color: #333">{{totalFiles}} </h6>
+        </div>
         <a class="sub" style="color: #bdbdbd;">
         </a>
 
@@ -44,9 +49,8 @@
 
     <h3 style="text-align: center">Operations:</h3>
     <hr>
-    <h4>{{error}}</h4>
     <table>
-
+        <h4> File Uploads: </h4>
         <tr>
 
               <form action="{{ upload_url }}" method="post" enctype="multipart/form-data">
@@ -62,7 +66,7 @@
             </form>
         </tr>
 
-        <tr>    &nbsp&nbsp</tr>
+
 
 
         <!-- add directory row -->
@@ -100,21 +104,21 @@
                 <th colspan="2">
                     {{ current_path }}
                 </th>
-                <th class="table_data" colspan="2">
+                <th class="data" colspan="2">
 
                     </th>
-                <th class="table_data" colspan="2">
+                <th class="data" colspan="2">
 
                     </th>
-                 <th class="table_data" colspan="2">
+                 <th class="data" colspan="2">
 
                     </th>
 
                 <!-- navigate up link -->
                 <th class="icon_row">
                     <form method="post" action="/" style="margin: 0px;">
-                        <button type="submit" name="button" class="button_back" value="Up">
-                            <i class="material-icons">keyboard_arrow_left</i>
+                        <button type="submit" name="button" class="button_back" value="Up" style="color: #f4fcff">
+                            ../
                         </button>
                     </form>
                 </th>
@@ -122,6 +126,7 @@
             </tr>
 
         {% else %}
+
             <tr>
                 <!-- icon -->
                 <th class="icon_row">
@@ -132,13 +137,13 @@
                 <th colspan="3">
                     {{ current_path }}
                 </th>
-                <th class="table_data" colspan="2">
+                <th class="data" colspan="2">
 
                     </th>
-                <th class="table_data" colspan="2">
+                <th class="data" colspan="2">
 
                     </th>
-                 <th class="table_data" colspan="2">
+                 <th class="data" colspan="2">
 
                     </th>
 
@@ -153,7 +158,7 @@
             {% for directory in directories %}
                 <tr class="content_table_row">
                     <!-- icon -->
-                    <td class="table_data icon_row">
+                    <td class="data icon_row">
                         <a href="/?directory_name={{ directory }}">
                             <i class="material-icons">folder</i>
                         </a>
@@ -161,32 +166,32 @@
 
 
                     <!-- directory name + link -->
-                    <td class="table_data" colspan="2">
+                    <td class="data" colspan="2">
                         <a href="/?directory_name={{ directory }}" class="table_link">
                             {{ directory }}
                         </a>
                     </td>
 
-                    <td class="table_data">
+                    <td class="data">
                         &nbsp&nbsp
 
                     </td>
-                       <td class="table_data">
+                       <td class="data">
                         &nbsp&nbsp
 
                     </td>
-                       <td class="table_data">
+                       <td class="data">
                         &nbsp&nbsp
 
                     </td>
-                       <td class="table_data">
+                       <td class="data">
                         &nbsp&nbsp
 
-                    </td>   <td class="table_data">
+                    </td>   <td class="data">
                         &nbsp&nbsp
 
                     </td>
-                     </td>   <td class="table_data">
+                     </td>   <td class="data">
                         &nbsp&nbsp
 
                     </td>
@@ -198,7 +203,7 @@
 
 
                     <!-- delete button -->
-                    <td class="table_data icon_row">
+                    <td class="data icon_row">
                         <form method="post" action="/" style="margin: 0px;">
                             <input type="hidden" name="name" value="{{ directory }}"/>
                             <input type="hidden" name="kind" value="directory"/>
@@ -216,35 +221,33 @@
 
             {% for i in range(len) %}
 
-
-
                 <tr class="content_table_row">
                     <!-- icon -->
-                    <td class="table_data icon_row">
+                    <td class="data icon_row">
                         <a href="/download?file_name={{ files[i] }}">
                             <i class="material-icons">insert_drive_file</i>
                         </a>
                     </td>
 
                     <!-- filename + download link -->
-                    <td class="table_data" colspan="2" id = "id_content">
+                    <td class="data" colspan="2" id = "id_content">
                         <a href="/download?file_name={{ files[i] }}" class="table_link">
                             {{ files[i].split('.')[0] }}
 
                         </a>
                     </td>
-                    <td class="table_data" colspan="2"id = "id_content2">
+                    <td class="data" colspan="2" id = "id_content2">
                         {{size[i]}} Bytes
                     </td>
-                    <td class="table_data" colspan="2">
+                    <td class="data" colspan="2">
                         {{create[i] }}
                     </td>
-                    <td class="table_data" colspan="2">
+                    <td class="data" colspan="2">
                         {{kind[i].split('/')[0]}}
                     </td>
 
                     <!-- delete button -->
-                    <td class="table_data icon_row">
+                    <td class="data icon_row">
                         <form method="post" action="/" style="margin: 0px;">
                             <input type="hidden" name="name" value="{{ files[i] }}"/>
                             <input type="hidden" name="kind" value="file"/>

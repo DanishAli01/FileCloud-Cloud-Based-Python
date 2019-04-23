@@ -1,16 +1,16 @@
-import logging
-from directoryoperations import get_path, contains, current_dir_obj
 import useroperations as userop
-from . import ndb
+from directoryoperations import get_path, contains, current_dir_obj, add_dir
 from models.file import File
 from . import blobstore
-from models.dir import Folder
-import datetime
-import models.file as m
+from . import ndb
 
 
 def get_files_in_current_path():
     return current_dir_obj().files
+
+
+def get_files_number_in_current_path():
+    return len(current_dir_obj().files)
 
 
 def file_object(file_name):
@@ -19,7 +19,6 @@ def file_object(file_name):
     path = get_path(file_name, root_dir_object)
     id = user.key.id() + path
     return ndb.Key("File", id).get()
-    # return key.get()
 
 
 def add(upload, filename, datetime):
@@ -42,6 +41,15 @@ def add(upload, filename, datetime):
         return "A file with this name already exists in this directory!"
 
 
+#
+# def share(upload, filename, key, datetime):
+#     model_user_from_key = ndb.Key("User", key).get()
+#     add_dir("Shared", model_user_from_key.root)
+#     current_dir_obj_from_shared = model_user_from_key..get()
+#     id = model_user_from_key.key.id() + get_path(filename,current_dir_obj_from_shared)
+#     fkey = ndb.Key("File",id)
+
+
 def delete(name):
     user = userop.get_model_user()
     object = current_dir_obj()
@@ -53,10 +61,3 @@ def delete(name):
     blobstore.delete(blobobj)
     key.delete()
     object.put()
-
-
-# def add_details(files):
-#
-#     for file in files:
-#         key = file.key
-#     return m.get_file_creation(key)

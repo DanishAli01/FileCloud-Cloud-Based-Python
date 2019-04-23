@@ -1,4 +1,4 @@
-from operations import useroperations
+import useroperations as useroperations
 from models.dir import Folder as modelfolder
 from . import ndb
 
@@ -8,6 +8,7 @@ rootname = "root"
 
 # returns key of current directory
 def current_dir_obj():
+    # print get_current_directory_key().get()
     return get_current_directory_key().get()
 
 
@@ -19,6 +20,7 @@ def get_current_directory_key():
 
 # returns key of root directory
 def get_parent_directory_key():
+    print get_current_directory_key().get().root_dir
     return get_current_directory_key().get().root_dir
 
 
@@ -37,6 +39,10 @@ def set_root_directory(my_user):
 
 def get_directories_in_current_path():
     return get_current_directory_key().get().directs
+
+
+def get_total_directories_in_current_path():
+    return len(get_current_directory_key().get().directs)
 
 
 # returns true if current directory is root directory
@@ -63,7 +69,7 @@ def contains(key, list):
 
 def add_dir(name, parent):
     user = useroperations.get_model_user()
-    parent_object = modelfolder()
+    # parent_object = modelfolder()
     parent_object = parent.get()
     p = get_path(name, parent_object)
     id = user.key.id() + p
@@ -96,7 +102,6 @@ def delete_dir(name):
         parent_directory_object.put()
 
         directory_key.delete()
-
 
 
 def home():

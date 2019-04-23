@@ -14,17 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-import datetime
-
-import webapp2
 import re
-from handlers import downloadhandler, uploadhandler
-from operations import fileoperations, useroperations, directoryoperations
-from handlers import blobstore
-from operations import ndb
-from models.dir import Folder
-from models.file import File
+import webapp2
 import Display
+from handlers import blobstore
+from handlers import downloadhandler, uploadhandler
+from models.dir import Folder
+from operations import fileoperations, useroperations, directoryoperations
+from operations import ndb
 
 
 class MainHandler(webapp2.RequestHandler):
@@ -45,8 +42,10 @@ class MainHandler(webapp2.RequestHandler):
             sort_file_size = useroperations.get_file_size(fileoperations.get_files_in_current_path())
             sort_file_create = useroperations.get_file_creation(fileoperations.get_files_in_current_path())
             sort_file_kind = useroperations.get_file_kind(fileoperations.get_files_in_current_path())
+            total_size = useroperations.get_total_totalsize(fileoperations.get_files_in_current_path())
+            total_files = fileoperations.get_files_number_in_current_path()
+            total_dirs = directoryoperations.get_total_directories_in_current_path()
             length = len(sort_file_names)
-
             Display.render_main(self,
                                 useroperations.get_logout_url(self),
                                 sort_dir_names,
@@ -55,7 +54,9 @@ class MainHandler(webapp2.RequestHandler):
                                 sort_file_create,
                                 sort_file_kind,
                                 length,
-                                uploadhandler.UploadHandler.e,
+                                total_size,
+                                total_files,
+                                total_dirs,
                                 directoryoperations.current_dir_obj().path,
                                 directoryoperations.is_in_root_directory(),
                                 blobstore.create_upload_url('/upload'))
