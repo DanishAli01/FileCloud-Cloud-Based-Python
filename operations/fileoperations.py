@@ -1,12 +1,12 @@
-import useroperations as userop
-from directoryoperations import get_path, contains, current_dir_obj, add_dir
+import useroperations as useroperations
+from directoryoperations import get_path, notcontains, current_dir_obj, get_directories_in_current_path, inlist, slash
 from models.file import File
+from models.dir import Folder
 from . import blobstore
 from . import ndb
 
 
 def get_files_in_current_path():
-    print current_dir_obj().files
     return current_dir_obj().files
 
 
@@ -15,7 +15,7 @@ def get_files_number_in_current_path():
 
 
 def file_object(file_name):
-    user = userop.get_model_user()
+    user = useroperations.get_model_user()
     root_dir_object = current_dir_obj()
     path = get_path(file_name, root_dir_object)
     id = user.key.id() + path
@@ -23,12 +23,12 @@ def file_object(file_name):
 
 
 def add(upload, filename, datetime):
-    user = userop.get_model_user()
+    user = useroperations.get_model_user()
     current_dir = current_dir_obj()
     id = user.key.id() + get_path(filename, current_dir)
     key = ndb.Key("File", id)
 
-    if contains(key, current_dir.files):
+    if notcontains(key, current_dir.files):
         object = File(id=id)
         object.name = filename
         object.date = datetime
@@ -52,7 +52,7 @@ def add(upload, filename, datetime):
 
 
 def delete(name):
-    user = userop.get_model_user()
+    user = useroperations.get_model_user()
     object = current_dir_obj()
     p = get_path(name, object)
     id = user.key.id() + p
@@ -62,4 +62,3 @@ def delete(name):
     blobstore.delete(blobobj)
     key.delete()
     object.put()
-

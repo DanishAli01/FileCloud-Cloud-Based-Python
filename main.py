@@ -34,25 +34,24 @@ class MainHandler(webapp2.RequestHandler):
                 directoryoperations.nav_dir(self.request.get('directory_name'))
                 self.redirect('/')
 
-            sort_dir = useroperations.sort_list(directoryoperations.get_directories_in_current_path())
-            sort_files = useroperations.sort_list(fileoperations.get_files_in_current_path())
-
-            sort_dir_names = useroperations.get_names_from_list(directoryoperations.get_directories_in_current_path())
-            sort_file_names = useroperations.get_names_from_list(fileoperations.get_files_in_current_path())
-            sort_file_size = useroperations.get_file_size(fileoperations.get_files_in_current_path())
-            sort_file_create = useroperations.get_file_creation(fileoperations.get_files_in_current_path())
-            sort_file_kind = useroperations.get_file_kind(fileoperations.get_files_in_current_path())
+            dir_names = useroperations.get_names(directoryoperations.get_directories_in_current_path())
+            file_names = useroperations.get_names(fileoperations.get_files_in_current_path())
+            file_size = useroperations.get_file_size(fileoperations.get_files_in_current_path())
+            file_create = useroperations.get_file_creation(fileoperations.get_files_in_current_path())
+            file_kind = useroperations.get_file_kind(fileoperations.get_files_in_current_path())
             total_size = useroperations.get_total_totalsize(fileoperations.get_files_in_current_path())
             total_files = fileoperations.get_files_number_in_current_path()
             total_dirs = directoryoperations.get_total_directories_in_current_path()
-            length = len(sort_file_names)
+            length = len(file_names)
+
+
             Display.render_main(self,
                                 useroperations.get_logout_url(self),
-                                sort_dir_names,
-                                sort_file_names,
-                                sort_file_size,
-                                sort_file_create,
-                                sort_file_kind,
+                                dir_names,
+                                file_names,
+                                file_size,
+                                file_create,
+                                file_kind,
                                 length,
                                 total_size,
                                 total_files,

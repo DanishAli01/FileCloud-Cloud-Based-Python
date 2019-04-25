@@ -8,7 +8,8 @@ rootname = "root"
 
 # returns key of current directory
 def current_dir_obj():
-    # print get_current_directory_key().get()
+    print "Root_dir_check"
+    print get_current_directory_key().get().root_dir
     return get_current_directory_key().get()
 
 
@@ -20,7 +21,7 @@ def get_current_directory_key():
 
 # returns key of root directory
 def get_parent_directory_key():
-    print get_current_directory_key().get().root_dir
+    # print get_current_directory_key().get().root_dir
     return get_current_directory_key().get().root_dir
 
 
@@ -38,6 +39,7 @@ def set_root_directory(my_user):
 
 
 def get_directories_in_current_path():
+    # print get_current_directory_key().get().directs
     return get_current_directory_key().get().directs
 
 
@@ -63,8 +65,12 @@ def dir_is_empty_check(dir):
 
 
 # checks if a key is in a list of keys, if so returns true
-def contains(key, list):
+def notcontains(key, list):
     return key not in list
+
+
+def inlist(key, list):
+    return True if key in list else False
 
 
 def add_dir(name, parent):
@@ -76,7 +82,7 @@ def add_dir(name, parent):
     dir = modelfolder(id=id)
     dir_key = dir.key
 
-    if contains(dir_key, parent_object.directs):
+    if notcontains(dir_key, parent_object.directs):
         parent_object.directs.append(dir_key)
         parent_object.put()
         # Set all attributes of the directory and save it to datastore
@@ -84,6 +90,8 @@ def add_dir(name, parent):
         dir.name = name
         dir.path = p
         dir.put()
+    else:
+        print "Directory Exists"
 
 
 def delete_dir(name):
@@ -100,7 +108,6 @@ def delete_dir(name):
         # Delete reference to this object from parent_directory
         parent_directory_object.directs.remove(directory_key)
         parent_directory_object.put()
-
         directory_key.delete()
 
 

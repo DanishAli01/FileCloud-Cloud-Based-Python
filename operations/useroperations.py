@@ -50,11 +50,11 @@ def add_user(user):
 
 
 # extracts all the names from a list of directory/ file keys
-def get_names_from_list(elements):
+def get_names(items):
     names = list()
 
-    for element in elements:
-        names.append(element.get().name)
+    for item in items:
+        names.append(item.get().name)
     return names
 
 
