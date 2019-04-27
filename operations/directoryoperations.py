@@ -8,8 +8,6 @@ rootname = "root"
 
 # returns key of current directory
 def current_dir_obj():
-    print "Root_dir_check"
-    print get_current_directory_key().get().root_dir
     return get_current_directory_key().get()
 
 

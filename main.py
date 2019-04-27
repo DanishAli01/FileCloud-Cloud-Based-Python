@@ -16,7 +16,7 @@
 #
 import re
 import webapp2
-import Display
+import display
 from handlers import blobstore
 from handlers import downloadhandler, uploadhandler
 from models.dir import Folder
@@ -35,17 +35,17 @@ class MainHandler(webapp2.RequestHandler):
                 self.redirect('/')
 
             dir_names = useroperations.get_names(directoryoperations.get_directories_in_current_path())
-            file_names = useroperations.get_names(fileoperations.get_files_in_current_path())
-            file_size = useroperations.get_file_size(fileoperations.get_files_in_current_path())
-            file_create = useroperations.get_file_creation(fileoperations.get_files_in_current_path())
-            file_kind = useroperations.get_file_kind(fileoperations.get_files_in_current_path())
-            total_size = useroperations.get_total_totalsize(fileoperations.get_files_in_current_path())
+            file_names = useroperations.get_names(fileoperations.get_files_in_current_obj())
+            file_size = useroperations.get_file_size(fileoperations.get_files_in_current_obj())
+            file_create = useroperations.get_file_creation(fileoperations.get_files_in_current_obj())
+            file_kind = useroperations.get_file_kind(fileoperations.get_files_in_current_obj())
+            total_size = useroperations.get_total_totalsize(fileoperations.get_files_in_current_obj())
             total_files = fileoperations.get_files_number_in_current_path()
             total_dirs = directoryoperations.get_total_directories_in_current_path()
             length = len(file_names)
 
 
-            Display.render_main(self,
+            display.render_main(self,
                                 useroperations.get_logout_url(self),
                                 dir_names,
                                 file_names,
@@ -61,7 +61,7 @@ class MainHandler(webapp2.RequestHandler):
                                 blobstore.create_upload_url('/upload'))
 
         else:
-            Display.render_login(self, useroperations.get_login_url(self))
+            display.render_login(self, useroperations.get_login_url(self))
 
     def post(self):
         self.response.headers['Content-Type'] = 'text/html'

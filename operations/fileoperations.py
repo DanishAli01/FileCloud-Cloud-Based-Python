@@ -6,7 +6,7 @@ from . import blobstore
 from . import ndb
 
 
-def get_files_in_current_path():
+def get_files_in_current_obj():
     return current_dir_obj().files
 
 
